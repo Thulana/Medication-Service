@@ -1,0 +1,86 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.6'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'jacoco'
+}
+
+group = 'com.client-name'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+configurations {
+	compile.exclude module: "logback-classic"
+	all {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation ('org.springframework.boot:spring-boot-starter-web'){
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+	}
+	implementation 'org.springframework.boot:spring-boot-starter-undertow'
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-configuration-processor'
+	implementation 'org.springframework:spring-context-support'
+	implementation ('io.springfox:springfox-boot-starter:3.0.0') {
+		exclude group: 'com.google.guava',  module: 'guava'
+	}
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.xerial:sqlite-jdbc:3.36.0'
+	implementation 'com.lmax:disruptor:3.4.4'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'io.rest-assured:rest-assured:4.2.0'
+	testImplementation 'io.rest-assured:json-path:4.2.0'
+	testImplementation 'io.rest-assured:xml-path:4.2.0'
+	testImplementation 'org.awaitility:awaitility:4.1.1'
+}
+
+springBoot {
+	buildInfo()
+}
+
+test {
+	useJUnitPlatform()
+	finalizedBy jacocoTestReport
+}
+
+tasks.jar {
+	enabled = false
+}
+
+jacocoTestReport {
+	dependsOn test
+}
+
+jacoco {
+	toolVersion = "0.8.5"
+	reportsDir = file("$buildDir/jacoco")
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+		csv.enabled false
+		html.destination file("${buildDir}/coverage")
+	}
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: ['**/MedicationApplication.class',
+										'**/ErrorCodes.class',
+										'**/configuration/**',
+										'**/test/**'])
+		}))
+	}
+}
