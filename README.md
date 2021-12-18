@@ -1,8 +1,7 @@
 # Medication Service 
 
-[comment]: <> ([![Test]&#40;https://github.com/Thulana/Company-Hierarchy/actions/workflows/gradle.yml/badge.svg?branch=master&#41;]&#40;https://github.com/Thulana/Company-Hierarchy/actions/workflows/gradle.yml&#41; )
-
-[comment]: <> ([![Coverage]&#40;https://codecov.io/gh/Thulana/Company-Hierarchy/branch/master/graph/badge.svg?token=8DEL9AQV03&#41;]&#40;https://codecov.io/gh/Thulana/Company-Hierarchy&#41;)
+[![Test](https://github.com/Thulana/Medication-Service/actions/workflows/gradle.yml/badge.svg)](https://github.com/Thulana/Medication-Service/actions/workflows/gradle.yml)
+[![codecov](https://codecov.io/gh/Thulana/Medication-Service/branch/master/graph/badge.svg?token=LOH0DT0XJN)](https://codecov.io/gh/Thulana/Medication-Service)
 
 Medication Service is a full-fledged SpringBoot microservice for maintaining a set of medications and related diseases
 
