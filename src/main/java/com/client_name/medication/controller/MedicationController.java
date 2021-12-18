@@ -71,7 +71,7 @@ public class MedicationController {
             )
     })
     @GetMapping(value = "")
-    public EnvelopedResponse<List<Medication>> getSupervisors(@RequestParam(value = "search_term")
+    public EnvelopedResponse<List<Medication>> getMedications(@RequestParam(value = "search_term")
                                                                   @NotBlank(message = "Search term cannot be blank")
                                                                   @Size(max = 100, message = "Search term cannot be more than 100 characters")
                                                                           String searchQuery) {
