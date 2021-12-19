@@ -90,6 +90,16 @@ public class HierarchyServiceExceptionHandler extends ResponseEntityExceptionHan
         return new ResponseEntity<>(envelopedResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(javax.validation.ValidationException.class)
+    public static ResponseEntity<EnvelopedResponse> handleJavaXValidationException(javax.validation.ValidationException e) {
+        EnvelopedResponse envelopedResponse = new EnvelopedResponse();
+
+        envelopedResponse.setError(envelopedResponse.toErrorResponse(Collections.singletonList( new InvalidDataException(ErrorCodes.UserError.INVALID_DATA.getErrorId(), e.getMessage()))));
+
+        LOG.error("bad request", e);
+        return new ResponseEntity<>(envelopedResponse, HttpStatus.BAD_REQUEST);
+    }
+
     private ServiceUserException fieldErrors(FieldError fieldError) {
         return new ServiceUserException(ErrorCodes.UserError.INVALID_DATA.getErrorId(), fieldError.getCode().equalsIgnoreCase("typeMismatch")
                 ? "Type of the request parameter '" + fieldError.getField() + "' is invalid"
