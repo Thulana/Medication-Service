@@ -46,7 +46,7 @@ class MedicationControllerTest {
         medication.setName("Folic Acid");
         medication.setId("b52d7619-da1f-4d63-805d-1d124fe53df4");
         medication.setDescription("Test description");
-        medication.setReleased(new SimpleDateFormat("yyyy-MM-dd").parse("2021-12-20")  );
+        medication.setReleased(new SimpleDateFormat("yyyy-MM-dd").parse("2021-12-19")  );
         medication.setDiseases(Collections.singleton(new Disease("bladder disease")));
 
 
