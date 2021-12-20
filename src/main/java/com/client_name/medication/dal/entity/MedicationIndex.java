@@ -16,11 +16,6 @@ public class MedicationIndex {
     @Column(name = "content", unique=false, nullable=false)
     private String content;
 
-    public MedicationIndex(String medicationId, String content) {
-        this.medicationId = medicationId;
-        this.content = content;
-    }
-
     public MedicationIndex() {
 
     }
@@ -31,10 +26,6 @@ public class MedicationIndex {
 
     public void setMedicationId(String medication_id) {
         this.medicationId = medication_id;
-    }
-
-    public String getContent() {
-        return content;
     }
 
     public void setContent(String content) {

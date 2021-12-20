@@ -47,29 +47,10 @@ public class Disease {
 
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Medication> getMedications() {
-        return medications;
-    }
-
-    public void setMedications(Set<Medication> medications) {
-        this.medications = medications;
-    }
 
     static class DiseaseDeserializer extends StdDeserializer<Disease> {
 
