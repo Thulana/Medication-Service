@@ -8,9 +8,7 @@ public interface ErrorCodes {
 
     // Errors as a result of consuming user
     enum UserError {
-        INVALID_DATA("DVE-01", "Validation error"),
-        CYCLIC_HIERARCHY("DVE-02", "{0} is in a cyclic path"),
-        MULTIPLE_ROOTS("DVE-03", "Multiple roots in hierarchy for {0}");
+        INVALID_DATA("DVE-01", "Validation error");
 
         private String errorId;
         private String errorMessage;

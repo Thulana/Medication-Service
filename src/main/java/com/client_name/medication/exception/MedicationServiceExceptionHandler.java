@@ -4,26 +4,19 @@ import com.client_name.medication.ErrorCodes;
 import com.client_name.medication.model.response.EnvelopedResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 
 @ControllerAdvice
-public class HierarchyServiceExceptionHandler extends ResponseEntityExceptionHandler {
+public class MedicationServiceExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private static final Logger LOG = LoggerFactory.getLogger(HierarchyServiceExceptionHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MedicationServiceExceptionHandler.class);
 
     @ExceptionHandler(Throwable.class)
     public static ResponseEntity<EnvelopedResponse> handleServiceException(Throwable e) {
