@@ -15,6 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 
@@ -38,13 +40,13 @@ class MedicationControllerTest {
 
 
     @BeforeEach
-    public void setup(){
+    public void setup() throws ParseException {
 
         Medication medication = new Medication();
         medication.setName("Folic Acid");
         medication.setId("b52d7619-da1f-4d63-805d-1d124fe53df4");
         medication.setDescription("Test description");
-        medication.setReleased(new Date());
+        medication.setReleased(new SimpleDateFormat("yyyy-MM-dd").parse("2021-12-20")  );
         medication.setDiseases(Collections.singleton(new Disease("bladder disease")));
 
 
