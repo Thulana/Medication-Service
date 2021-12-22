@@ -20,8 +20,8 @@ import java.util.Date;
 import java.util.Set;
 
 /**
- * Entity to represent a employee in the database
- * Equals to a record in Employee table
+ * Entity to represent a medication in the database
+ * Equals to a record in medication table
  */
 @Entity
 @Table(name = "medication")

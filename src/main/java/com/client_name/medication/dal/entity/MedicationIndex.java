@@ -5,6 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Entity to represent a medication_search_index in the database
+ * Equals to a record in medication_search_index table
+ */
 @Entity
 @Table(name = "medication_search_index")
 public class MedicationIndex {

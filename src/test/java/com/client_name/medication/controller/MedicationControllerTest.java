@@ -18,7 +18,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.Date;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;

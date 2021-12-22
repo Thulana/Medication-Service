@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+/**
+ * DTO representing the search term
+ */
 public class SearchMedicationDTO {
     private String searchTerm;
 

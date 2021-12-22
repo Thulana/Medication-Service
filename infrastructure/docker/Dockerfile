@@ -6,8 +6,8 @@ RUN cd /tmp/app && gradle clean assemble --no-daemon
 
 FROM adoptopenjdk/openjdk11:x86_64-alpine-jre-11.0.13_8
 
-ENV USER_NAME personia
-ENV PASSWORD personia
+ENV USER_NAME test_user
+ENV PASSWORD test_password
 
 VOLUME /tmp
 
