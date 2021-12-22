@@ -50,7 +50,7 @@ public class DataLoader implements ApplicationRunner {
             medications.forEach(medication -> {
                 MedicationIndex medicationIndex = new MedicationIndex();
                 medicationIndex.setMedicationId(medication.getId());
-                String content = medication.getName() + " " + medication.getDiseases().stream().map(Disease::getName).collect(Collectors.joining(" "));
+                String content = medication.getName() + " " + medication.getDescription() + " " + medication.getDiseases().stream().map(Disease::getName).collect(Collectors.joining(" "));
                 medicationIndex.setContent(content);
                 indices.add(medicationIndex);
             });

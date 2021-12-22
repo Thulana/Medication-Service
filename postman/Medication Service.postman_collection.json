@@ -1,0 +1,169 @@
+{
+	"info": {
+		"_postman_id": "c5b2f61d-8e7a-441d-b08e-f5fbe238060f",
+		"name": "Medication Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Find Medication - Success",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/medications?search_term=cancer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"medications"
+					],
+					"query": [
+						{
+							"key": "search_term",
+							"value": "cancer"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Medication - Success - case sensitivity",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/medications?search_term=cefixime",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"medications"
+					],
+					"query": [
+						{
+							"key": "search_term",
+							"value": "cefixime"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Medication - Success - partial match",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/medications?search_term=cance",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"medications"
+					],
+					"query": [
+						{
+							"key": "search_term",
+							"value": "cance"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Medication - Empty search term",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/medications?search_term=",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"medications"
+					],
+					"query": [
+						{
+							"key": "search_term",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Medication - Non existing search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/medications?search_term=dfdfdsfsd",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"medications"
+					],
+					"query": [
+						{
+							"key": "search_term",
+							"value": "dfdfdsfsd"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "personia",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "personia",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

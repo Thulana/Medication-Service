@@ -20,6 +20,10 @@ import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.util.Set;
 
+/**
+ * Entity to represent a disease in the database
+ * Equals to a record in disease table
+ */
 @Entity
 @Table(name = "disease")
 @JsonIgnoreProperties({ "id", "medications" })
