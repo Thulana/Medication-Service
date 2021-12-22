@@ -82,7 +82,7 @@ class MedicationControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(
                         "{\"data\":[{\"id\":\"b52d7619-da1f-4d63-805d-1d124fe53df4\",\"name\":\"Folic Acid\"," +
-                                "\"description\":\"Test description\",\"released\":\"2021-12-19\",\"diseases\":[{\"name\":\"bladder disease\"}]}]," +
+                                "\"description\":\"Test description\",\"released\":\"2021-12-19\",\"diseases\":[\"bladder disease\"]}]," +
                                 "\"error\":[]}"));
     }
 }
