@@ -1,12 +1,13 @@
 package com.client_name.medication.dal.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.hibernate.annotations.GenericGenerator;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -15,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.Set;
@@ -24,10 +26,12 @@ import java.util.Set;
  * Equals to a record in medication table
  */
 @Entity
+@ApiModel
 @Table(name = "medication")
 public class Medication {
     @Id
     @Column(name = "id", unique=true, nullable=false)
+    @NotBlank(message = "Id is mandatory")
     private String id;
 
     @Column(name = "name", unique=true, nullable=false)
@@ -41,6 +45,7 @@ public class Medication {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "released_date", unique=false, nullable=false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date released;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -48,6 +53,8 @@ public class Medication {
             name = "medication_disease",
             joinColumns = @JoinColumn(name = "medication_id"),
             inverseJoinColumns = @JoinColumn(name = "disease_id"))
+    @ApiModelProperty(name = "diseases", dataType = "List", example = "[\"str1\", \"str2\", \"str3\"]")
+    @NotEmpty
     private Set<Disease> diseases;
 
     public Medication(String name){
@@ -96,5 +103,16 @@ public class Medication {
 
     public void setDiseases(Set<Disease> diseases) {
         this.diseases = diseases;
+    }
+
+    @Override
+    public String toString() {
+        return "Medication{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", released=" + released +
+                ", diseases=" + diseases +
+                '}';
     }
 }

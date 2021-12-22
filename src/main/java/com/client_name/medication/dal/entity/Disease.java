@@ -1,11 +1,14 @@
 package com.client_name.medication.dal.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -28,6 +31,7 @@ import java.util.Set;
 @Table(name = "disease")
 @JsonIgnoreProperties({ "id", "medications" })
 @JsonDeserialize(using = Disease.DiseaseDeserializer.class)
+@JsonSerialize(using = Disease.DiseaseSerializer.class)
 public class Disease {
     @Id
     @GeneratedValue(generator="system-uuid")
@@ -55,6 +59,13 @@ public class Disease {
         return name;
     }
 
+    @Override
+    public String toString() {
+        return "Disease{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 
     static class DiseaseDeserializer extends StdDeserializer<Disease> {
 
@@ -63,7 +74,7 @@ public class Disease {
         }
 
         @Override
-        public Disease deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+        public Disease deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
             JsonNode node = jp.getCodec().readTree(jp);
             return new Disease(node.asText());
         }
@@ -72,5 +83,13 @@ public class Disease {
             super(vc);
         }
 
+    }
+
+    static class DiseaseSerializer extends JsonSerializer<Disease> {
+
+        @Override
+        public void serialize(Disease value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+            gen.writeString(value.getName());
+        }
     }
 }
