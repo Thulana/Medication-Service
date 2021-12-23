@@ -8,7 +8,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.security.web.firewall.RequestRejectedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -50,16 +49,6 @@ public class MedicationServiceExceptionHandler extends ResponseEntityExceptionHa
 
         envelopedResponse.setError(envelopedResponse.toErrorResponse(Collections.singletonList(exception)));
         LOG.error("bad request", ex);
-        return new ResponseEntity<>(envelopedResponse, HttpStatus.BAD_REQUEST);
-    }
-
-
-    @ExceptionHandler(RequestRejectedException.class)
-    public ResponseEntity<EnvelopedResponse> handleRequestRejectedException(RequestRejectedException exception) {
-        EnvelopedResponse envelopedResponse = new EnvelopedResponse();
-        InvalidDataException invalidDataException = new InvalidDataException(ErrorCodes.UserError.INVALID_DATA.getErrorId(), exception.getMessage());
-        envelopedResponse.setError(envelopedResponse.toErrorResponse(Collections.singletonList(invalidDataException)));
-        LOG.error("bad request", exception);
         return new ResponseEntity<>(envelopedResponse, HttpStatus.BAD_REQUEST);
     }
 
