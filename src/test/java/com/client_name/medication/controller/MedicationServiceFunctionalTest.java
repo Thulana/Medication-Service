@@ -105,4 +105,118 @@ class MedicationServiceFunctionalTest {
         Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
     }
 
+    @Test
+    void shouldReturnErrorWhenEmptyPutPayload() {
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .auth().basic(userName, userPassword)
+                .body("")
+                .when()
+                .put(String.format("%s%s", uri, "/medications"))
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void shouldReturnErrorWhenEmptyMedicationPutPayload() {
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .auth().basic(userName, userPassword)
+                .body("{\n" +
+                        "    \"medications\":[]\n" +
+                        "}")
+                .when()
+                .put(String.format("%s%s", uri, "/medications"))
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void shouldReturnErrorWhenEmptyIdInMedicationPutPayload() {
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .auth().basic(userName, userPassword)
+                .body("{\n" +
+                        "    \"medications\": [\n" +
+                        "        {\n" +
+                        "            \"id\": \"\",\n" +
+                        "            \"diseases\": [\n" +
+                        "                \"bladder disease\",\n" +
+                        "                \"cystitis\",\n" +
+                        "                \"acute cystitis\"\n" +
+                        "            ],\n" +
+                        "            \"description\": \"Test\",\n" +
+                        "            \"name\": \"Folic Acid\",\n" +
+                        "            \"released\": \"1973-12-29\"\n" +
+                        "        }\n" +
+                        "    ]\n" +
+                        "}")
+                .when()
+                .put(String.format("%s%s", uri, "/medications"))
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void shouldReturnErrorWhenInvalidDateInMedicationPutPayload() {
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .auth().basic(userName, userPassword)
+                .body("{\n" +
+                        "    \"medications\": [\n" +
+                        "        {\n" +
+                        "            \"id\": \"b52d7619-da1f-4d63-805d-1d124fe53df4\",\n" +
+                        "            \"diseases\": [\n" +
+                        "                \"bladder disease\",\n" +
+                        "                \"cystitis\",\n" +
+                        "                \"acute cystitis\"\n" +
+                        "            ],\n" +
+                        "            \"description\": \"Test\",\n" +
+                        "            \"name\": \"Folic Acid\",\n" +
+                        "            \"released\": \"1973-12\"\n" +
+                        "        }\n" +
+                        "    ]\n" +
+                        "}")
+                .when()
+                .put(String.format("%s%s", uri, "/medications"))
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void shouldReturnResponseForValidPutRequest() {
+
+        Response response = RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .auth().basic(userName, userPassword)
+                .body("{\n" +
+                        "    \"medications\": [\n" +
+                        "        {\n" +
+                        "            \"id\": \"b52d7619-da1f-4d63-805d-1d124fe53df4\",\n" +
+                        "            \"diseases\": [\n" +
+                        "                \"bladder disease\",\n" +
+                        "                \"cystitis\",\n" +
+                        "                \"acute cystitis\"\n" +
+                        "            ],\n" +
+                        "            \"description\": \"Test\",\n" +
+                        "            \"name\": \"Folic Acid\",\n" +
+                        "            \"released\": \"1973-12-29\"\n" +
+                        "        }\n" +
+                        "    ]\n" +
+                        "}")
+                .when()
+                .put(String.format("%s%s", uri, "/medications"));
+
+        Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
+    }
+
 }

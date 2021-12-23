@@ -1,6 +1,7 @@
 package com.client_name.medication.controller;
 
 import com.client_name.medication.dal.entity.Medication;
+import com.client_name.medication.model.request.PutMedicationDTO;
 import com.client_name.medication.model.request.SearchMedicationDTO;
 import com.client_name.medication.model.response.EnvelopedResponse;
 import com.client_name.medication.model.response.MedicationResponse;
@@ -19,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -78,6 +81,30 @@ public class MedicationController {
         MedicationResponse<List<Medication>> response = new MedicationResponse<>();
 
         List<Medication> medications = medicationService.findMedications(new SearchMedicationDTO(searchQuery));
+
+        response.setData(medications);
+        response.setError(response.toErrorResponse(new ArrayList<>()));
+
+        return response;
+    }
+
+    @ApiOperation(
+            value = "Create/modify medications",
+            authorizations = {@Authorization(value = "basicAuth")}
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "400", description = "Request validation errors", content = @Content(
+                    schema = @Schema(implementation = EnvelopedResponse.class)
+            )),
+            @ApiResponse(responseCode = "500", description = "Internal Server errors", content = @Content(
+                    schema = @Schema(implementation = EnvelopedResponse.class)
+            )),
+    })
+    @PutMapping(value = "")
+    public EnvelopedResponse<List<Medication>> putMedications(@RequestBody @Validated PutMedicationDTO dto) {
+        MedicationResponse<List<Medication>> response = new MedicationResponse<>();
+
+        List<Medication> medications = medicationService.putMedications(dto);
 
         response.setData(medications);
         response.setError(response.toErrorResponse(new ArrayList<>()));

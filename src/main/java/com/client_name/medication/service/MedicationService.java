@@ -1,6 +1,7 @@
 package com.client_name.medication.service;
 
 import com.client_name.medication.dal.entity.Medication;
+import com.client_name.medication.model.request.PutMedicationDTO;
 import com.client_name.medication.model.request.SearchMedicationDTO;
 
 import java.util.List;
@@ -15,4 +16,13 @@ public interface MedicationService {
      * @return {@link List< Medication >} response object with medications
      */
     List<Medication> findMedications(SearchMedicationDTO dto);
+
+
+    /**
+     * Endpoint to add new medications with the relevant diseases
+     *
+     * @param dto - Medications to be created/modified
+     * @return {@link List< Medication >} response object with medications
+     */
+    List<Medication> putMedications(PutMedicationDTO dto);
 }

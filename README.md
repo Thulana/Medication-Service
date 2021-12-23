@@ -39,9 +39,11 @@ Providing a better search capability for a set of medications and the diseases r
 target is to provide a robust interface to do full text searches
 
 ## API Documentation
-| REST Endpoint        	                           | Description                  	                                                       |
-|--------------------------------------------------|---------------------------------------------------------------------------------------|
-| `GET /medications`        	                   | For a given search term find the related medications                                  |
+| REST Endpoint        	                           | Description                  	                                                                |
+|--------------------------------------------------|------------------------------------------------------------------------------------------------|
+| `GET /medications`        	                   | For a given search term find the related medications                                           |
+|                                                                                                                                          
+| `PUT /medications`        	                   | Create / modify medications (please refer swagger documentation for comprehensive information) |
 
 * NOTE: API will require basic authentication
 
@@ -104,6 +106,7 @@ Following environment variables will be used by the service.
 #### API Documentation Standard
 
 * Swagger - Swagger:2.0
+* Available on path: <HOST_URL>/swagger-ui/index.html
 
 ### Testing
 

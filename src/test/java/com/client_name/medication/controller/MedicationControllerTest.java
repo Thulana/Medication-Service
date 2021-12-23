@@ -2,6 +2,7 @@ package com.client_name.medication.controller;
 
 import com.client_name.medication.dal.entity.Disease;
 import com.client_name.medication.dal.entity.Medication;
+import com.client_name.medication.model.request.PutMedicationDTO;
 import com.client_name.medication.model.request.SearchMedicationDTO;
 import com.client_name.medication.service.impl.MedicationServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -37,6 +39,21 @@ class MedicationControllerTest {
     @Value("${user.password}")
     String password;
 
+    private String samplePayload = "{\n" +
+            "  \"medications\": [\n" +
+            "    {\n" +
+            "      \"id\": \"b52d7619-da1f-4d63-805d-1d124fe53df4\",\n" +
+            "      \"diseases\": [\n" +
+            "        \"bladder disease\",\n" +
+            "        \"cystitis\",\n" +
+            "        \"acute cystitis\"\n" +
+            "      ],\n" +
+            "      \"description\": \"Test description\",\n" +
+            "      \"name\": \"Folic Acid\",\n" +
+            "      \"released\": \"1973-12-29\"\n" +
+            "    }\n" +
+            "  ]\n" +
+            "}";
 
     @BeforeEach
     public void setup() throws ParseException {
@@ -50,6 +67,8 @@ class MedicationControllerTest {
 
 
         given(medicationService.findMedications(any(SearchMedicationDTO.class)))
+                .willReturn(Collections.singletonList(medication));
+        given(medicationService.putMedications(any(PutMedicationDTO.class)))
                 .willReturn(Collections.singletonList(medication));
 
     }
@@ -72,7 +91,7 @@ class MedicationControllerTest {
     }
 
     @Test
-    void shouldSuccessWhenUserNameAndPasswordAreCorrect() throws Exception {
+    void shouldSuccessfullySearchMedicationWhenUserNameAndPasswordAreCorrect() throws Exception {
 
         this.mock.perform(MockMvcRequestBuilders
                 .get("/medications")
@@ -82,7 +101,35 @@ class MedicationControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(
                         "{\"data\":[{\"id\":\"b52d7619-da1f-4d63-805d-1d124fe53df4\",\"name\":\"Folic Acid\"," +
-                                "\"description\":\"Test description\",\"released\":\"2021-12-19\",\"diseases\":[{\"name\":\"bladder disease\"}]}]," +
+                                "\"description\":\"Test description\",\"released\":\"2021-12-19\",\"diseases\":[\"bladder disease\"]}]," +
+                                "\"error\":[]}"));
+    }
+
+    @Test
+    void shouldFailToCreateMedicationWhenUserNameAndPasswordAreInCorrect() throws Exception {
+
+        this.mock.perform(MockMvcRequestBuilders
+                .put("/medications")
+                .with(SecurityMockMvcRequestPostProcessors.httpBasic(userName, "wrong password"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(samplePayload)
+                .characterEncoding("utf-8"))
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized());
+    }
+
+    @Test
+    void shouldSuccessfullyCreateMedicationWhenUserNameAndPasswordAreCorrect() throws Exception {
+
+        this.mock.perform(MockMvcRequestBuilders
+                .put("/medications")
+                .with(SecurityMockMvcRequestPostProcessors.httpBasic(userName, password))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(samplePayload)
+                .characterEncoding("utf-8"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(
+                        "{\"data\":[{\"id\":\"b52d7619-da1f-4d63-805d-1d124fe53df4\",\"name\":\"Folic Acid\"," +
+                                "\"description\":\"Test description\",\"released\":\"2021-12-19\",\"diseases\":[\"bladder disease\"]}]," +
                                 "\"error\":[]}"));
     }
 }
