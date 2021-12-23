@@ -4,7 +4,9 @@ import com.client_name.medication.ErrorCodes;
 import com.client_name.medication.dal.entity.Disease;
 import com.client_name.medication.dal.entity.Medication;
 import com.client_name.medication.dal.repository.MedicationRepository;
+import com.client_name.medication.dal.repository.MedicationSearchRepository;
 import com.client_name.medication.exception.DataAccessException;
+import com.client_name.medication.model.request.PutMedicationDTO;
 import com.client_name.medication.model.request.SearchMedicationDTO;
 import com.client_name.medication.service.impl.MedicationServiceImpl;
 import org.junit.jupiter.api.Assertions;
@@ -26,12 +28,16 @@ import static org.mockito.BDDMockito.given;
 class MedicationServiceTest {
 
     private SearchMedicationDTO dto;
+    private PutMedicationDTO putMedicationDTO;
 
     @Autowired
     private MedicationServiceImpl medicationService;
 
     @MockBean
     private MedicationRepository medicationRepository;
+
+    @MockBean
+    private MedicationSearchRepository medicationSearchRepository;
 
     @BeforeEach
     void setup() {
@@ -44,8 +50,10 @@ class MedicationServiceTest {
         medication.setReleased(new Date());
         medication.setDiseases(Collections.singleton(new Disease("bladder disease")));
 
-        given(medicationRepository.searchForMedications(any())).willReturn(Collections.singletonList(medication));
+        putMedicationDTO = new PutMedicationDTO(Collections.singletonList(medication));
 
+        given(medicationRepository.searchForMedications(any())).willReturn(Collections.singletonList(medication));
+        given(medicationRepository.saveAll(any())).willReturn(Collections.singletonList(medication));
 
     }
 
@@ -64,6 +72,28 @@ class MedicationServiceTest {
 
         try {
             medicationService.findMedications(dto);
+            Assertions.fail("Should throw data access exception");
+        } catch (DataAccessException expectedException) {
+            Assertions.assertEquals(ErrorCodes.ServiceError.DATA_ACCESS_FAILURE.getErrorId(), expectedException.getErrorId());
+        }
+
+    }
+
+    @Test
+    void shouldCreateMedicationsSuccessfully() {
+
+        List<Medication> medications = medicationService.putMedications(putMedicationDTO);
+
+        Assertions.assertEquals(1, medications.size());
+    }
+
+    @Test
+    void shouldFailToCreateMedicationsOnDatabaseFailure() {
+
+        given(medicationSearchRepository.saveAll(any())).willThrow(UncategorizedSQLException.class);
+
+        try {
+            medicationService.putMedications(putMedicationDTO);
             Assertions.fail("Should throw data access exception");
         } catch (DataAccessException expectedException) {
             Assertions.assertEquals(ErrorCodes.ServiceError.DATA_ACCESS_FAILURE.getErrorId(), expectedException.getErrorId());

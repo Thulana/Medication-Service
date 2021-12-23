@@ -82,6 +82,6 @@ public class MedicationServiceImpl implements MedicationService {
             medicationIndex.setContent(content);
             indices.add(medicationIndex);
         });
-        medicationSearchRepository.saveAllAndFlush(indices);
+        medicationSearchRepository.saveAll(indices);
     }
 }
