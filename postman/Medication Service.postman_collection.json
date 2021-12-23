@@ -129,6 +129,118 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Put Medication - Success",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"medications\": [\n        {\n            \"id\": \"b52d7619-da1f-4d63-805d-1d124fe53df4\",\n            \"diseases\": [\n                \"bladder disease\",\n                \"cystitis\",\n                \"acute cystitis\"\n            ],\n            \"description\": \"Test\",\n            \"name\": \"Folic Acid\",\n            \"released\": \"1973-12-29\"\n        },\n        {\n            \"id\": \"cdf1dcda-19cf-4cbc-ae9c-75d7ae4088ae\",\n            \"diseases\": [\n                \"sensory system disease\",\n                \"auditory system disease\",\n                \"dislocation of ear ossicle\"\n            ],\n            \"description\": \"test2\",\n            \"name\": \"Emsam\",\n            \"released\": \"2000-12-07\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/medications",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"medications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put Medication - Empty body",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\"\"",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/medications",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"medications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put Medication - Invalid date",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"medications\": [\n        {\n            \"id\": \"b52d7619-da1f-4d63-805d-1d124fe53df4\",\n            \"diseases\": [\n                \"bladder disease\",\n                \"cystitis\",\n                \"acute cystitis\"\n            ],\n            \"description\": \"Test\",\n            \"name\": \"Folic Acid\",\n            \"released\": \"1973-12\"\n        },\n        {\n            \"id\": \"cdf1dcda-19cf-4cbc-ae9c-75d7ae4088ae\",\n            \"diseases\": [\n                \"sensory system disease\",\n                \"auditory system disease\",\n                \"dislocation of ear ossicle\"\n            ],\n            \"description\": \"test2\",\n            \"name\": \"Emsam\",\n            \"released\": \"2000-12-07\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/medications",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"medications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put Medication - empty id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"medications\": [\n        {\n            \"id\": \"\",\n            \"diseases\": [\n                \"bladder disease\",\n                \"cystitis\",\n                \"acute cystitis\"\n            ],\n            \"description\": \"Test\",\n            \"name\": \"Folic Acid\",\n            \"released\": \"1973-12-19\"\n        },\n        {\n            \"id\": \"cdf1dcda-19cf-4cbc-ae9c-75d7ae4088ae\",\n            \"diseases\": [\n                \"sensory system disease\",\n                \"auditory system disease\",\n                \"dislocation of ear ossicle\"\n            ],\n            \"description\": \"test2\",\n            \"name\": \"Emsam\",\n            \"released\": \"2000-12-07\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/medications",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"medications"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {
