@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
+ * This entity is used for creating a FTS table for full text search with the relevant fields (text) included
  * Entity to represent a medication_search_index in the database
  * Equals to a record in medication_search_index table
  */

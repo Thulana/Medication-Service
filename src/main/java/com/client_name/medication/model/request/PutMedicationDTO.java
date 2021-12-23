@@ -6,7 +6,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
-
+/**
+ * DTO representing put medication payload
+ */
 public class PutMedicationDTO {
 
     @NotEmpty

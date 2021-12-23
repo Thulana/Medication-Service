@@ -2,6 +2,12 @@ package com.client_name.medication.model.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+/**
+ *
+ * Error response object
+ * Used for returning API native and user friendly error
+ *
+ */
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class Error {
     private String errorId;

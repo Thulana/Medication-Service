@@ -13,7 +13,7 @@ public interface MedicationService {
      * Use an inverted index fused with tokenizing and proximity searching
      *
      * @param dto - Search Query dto object
-     * @return {@link List< Medication >} response object with medications
+     * @return {@link List<Medication>} response object with medications
      */
     List<Medication> findMedications(SearchMedicationDTO dto);
 
@@ -22,7 +22,7 @@ public interface MedicationService {
      * Endpoint to add new medications with the relevant diseases
      *
      * @param dto - Medications to be created/modified
-     * @return {@link List< Medication >} response object with medications
+     * @return {@link List<Medication>} response object with medications
      */
     List<Medication> putMedications(PutMedicationDTO dto);
 }

@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
@@ -67,11 +67,8 @@ public class Disease {
                 '}';
     }
 
-    static class DiseaseDeserializer extends StdDeserializer<Disease> {
-
-        public DiseaseDeserializer() {
-            this(null);
-        }
+    //Custom JsonDeserializer for Disease class for converting just the disease name to an Object
+    static class DiseaseDeserializer extends JsonDeserializer<Disease> {
 
         @Override
         public Disease deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
@@ -79,12 +76,9 @@ public class Disease {
             return new Disease(node.asText());
         }
 
-        public DiseaseDeserializer(Class<?> vc) {
-            super(vc);
-        }
-
     }
 
+    //Custom JsonSerializer for representing a Disease Object as a String
     static class DiseaseSerializer extends JsonSerializer<Disease> {
 
         @Override
