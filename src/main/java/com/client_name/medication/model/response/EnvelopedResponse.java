@@ -7,6 +7,11 @@ import com.sun.istack.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Base response object - make API responses unified across all endpoints
+ *
+ * @param <T> Response object type
+ */
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class EnvelopedResponse<T>{
 

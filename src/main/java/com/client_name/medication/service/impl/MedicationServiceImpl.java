@@ -21,6 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ *
+ * Service level including logic related to Medications
+ *
+ */
 @Service
 public class MedicationServiceImpl implements MedicationService {
 
@@ -35,12 +40,12 @@ public class MedicationServiceImpl implements MedicationService {
         this.medicationSearchRepository = medicationSearchRepository;
     }
 
-
     @Override
     public List<Medication> findMedications(SearchMedicationDTO dto) {
 
         LOGGER.info(String.format("Fetching medications for search term : %s", dto.getSearchTerm()));
 
+        // find the medications which includes the search term utilizing the inverted index for accurate and fast execution
         List<Medication> medications;
         try{
             medications = medicationRepository.searchForMedications(dto.getTokenizedSearchTerm());
@@ -48,6 +53,7 @@ public class MedicationServiceImpl implements MedicationService {
             throw new com.client_name.medication.exception.DataAccessException(ErrorCodes.ServiceError.DATA_ACCESS_FAILURE.getErrorId(), ex.getMessage());
         }
 
+        // If no items found, return a custom error
         if (medications.isEmpty()) {
             throw new DataNotFoundException(ErrorCodes.ServiceError.DATA_NOT_FOUND.getErrorId(), ErrorCodes.ServiceError.DATA_NOT_FOUND.getErrorMessage());
         }
@@ -64,7 +70,9 @@ public class MedicationServiceImpl implements MedicationService {
 
         List<Medication> medications;
         try{
+            // persist medication objects
             medications = medicationRepository.saveAll(dto.getMedications());
+            // update search index
             updateSearchIndex(medications);
         }catch (DataAccessException ex){
             throw new com.client_name.medication.exception.DataAccessException(ErrorCodes.ServiceError.DATA_ACCESS_FAILURE.getErrorId(), ex.getMessage());
@@ -73,6 +81,11 @@ public class MedicationServiceImpl implements MedicationService {
         return medications;
     }
 
+    /**
+     * Method to populate the inverted index table on a new addtion/modification of medications
+     *
+     * @param medications List of medication objects
+     */
     private void updateSearchIndex(List<Medication> medications){
         List<MedicationIndex> indices = new ArrayList<>();
         medications.forEach(medication -> {
