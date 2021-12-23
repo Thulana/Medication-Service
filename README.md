@@ -42,8 +42,10 @@ target is to provide a robust interface to do full text searches
 | REST Endpoint        	                           | Description                  	                                                                |
 |--------------------------------------------------|------------------------------------------------------------------------------------------------|
 | `GET /medications`        	                   | For a given search term find the related medications                                           | 
-| `PUT /medications`        	                   | Create / modify medications (please refer swagger documentation for comprehensive information) |
+| `PUT /medications`        	                   | Create / modify medications                                                                    |
 
+* Comprehensive API documentation is available via swagger (`<HOST_URL>/swagger-ui/index.html`)
+* Postman collection is available on path `/postman`
 * NOTE: API will require basic authentication
 
 ## Getting Started
