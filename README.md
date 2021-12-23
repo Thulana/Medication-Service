@@ -41,8 +41,7 @@ target is to provide a robust interface to do full text searches
 ## API Documentation
 | REST Endpoint        	                           | Description                  	                                                                |
 |--------------------------------------------------|------------------------------------------------------------------------------------------------|
-| `GET /medications`        	                   | For a given search term find the related medications                                           |
-|                                                                                                                                          
+| `GET /medications`        	                   | For a given search term find the related medications                                           | 
 | `PUT /medications`        	                   | Create / modify medications (please refer swagger documentation for comprehensive information) |
 
 * NOTE: API will require basic authentication
